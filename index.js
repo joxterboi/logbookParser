@@ -4,31 +4,33 @@ const { exit } = require("node:process");
 
 const fileName = "joakim.csv";
 
-const fileContent = fs.readFileSync(fileName, "utf-8");
+const fileContent = fs.readFileSync(`./logbooks/${fileName}`, "utf-8");
 
 let workingContent = fileContent.split("\n");
 
 let blockHrs = 0;
 
-let Y, M, T, R
+let Y, M, T, R, S
 
 process.argv.slice(2).forEach(arg => {
     const argData = arg.slice(2).toUpperCase();
     const inp = arg.slice(0,2).toUpperCase();
-    if(inp == "Y:") {
+    if(inp == "Y:") { //Year
         Y = argData;
-    } else if(inp == "M:") {
+    } else if(inp == "M:") { //Month
         M = argData;
-    } else if(inp == "R:") {
+    } else if(inp == "R:") { //Reg
         R = argData;
-    } else if(inp == "T:") {
+    } else if(inp == "T:") { //Type
         T = argData;
+    } else if(inp == "S:") { //timeSpan
+        S = timespan(argData);
     } else if(arg.toUpperCase() == "HELP") {
         console.log("You can use arguments to filter flights.");
         console.log("If you only wanna se the flights from 2025 you type 'y:2025'.");
         console.log("You can combine how ever many commands you want.");
         console.log("\nFull list of commands:");
-        console.log("Year Y:xxxx \nMonth M:xx \nType T:xxx \nRegistration R:xxxxx")
+        console.log("Year Y:xxxx \nMonth M:xx \nType T:xxx \nRegistration R:xxxxx  \nSpan months S:xx-xx")
         return process.exit();
     } else {
         console.log(`${arg} is not a command.`);
@@ -66,6 +68,7 @@ workingContent.forEach(flight => {
     if (filterThis(M, month)) return;
     if (filterThis(R, reg)) return;
     if (filterThis(T, type)) return;
+    if (filterSpan(S, month)) return;
 
 
 
@@ -97,5 +100,25 @@ function filterThis(consoleInput, logbookEntry) {
         return true;
     } else {
         return false;
+    }
+}
+
+
+function timespan(spanInput) {
+    let span = {}
+    const splitInput = spanInput.split("-");
+    span.lower = parseInt(splitInput[0]);
+    span.upper = parseInt(splitInput[1]);
+
+    return span;
+}
+
+function filterSpan(span, currentMonth) {
+    currentMonth = parseInt(currentMonth);
+
+    if(span.lower <= currentMonth && span.upper >= currentMonth) {
+        return false;
+    } else {
+        return true;
     }
 }
