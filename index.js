@@ -121,7 +121,7 @@ function timespan(spanInput) {
 }
 
 function filterSpan(span, currentMonth) {    
-    if(!span) return true;
+    if(!span) return false;
     if(span.lower <= currentMonth && span.upper >= currentMonth) {
         return false;
     } else {
