@@ -12,9 +12,12 @@ let blockHrs = 0;
 let flightCounter = 0;
 let totalOutput = "";
 
-let Y, M, T, R, S, O, A;
+let Y, M, T, R, S, O, A, departureInput, arrivalInput;
 
 process.argv.slice(2).forEach(arg => {
+    if (!arg.includes(":")) {
+        arg += ":"
+    }
     const inp = arg.split(":")[0].toUpperCase();
     const argData = arg.split(":")[1].toUpperCase();
 
@@ -32,15 +35,19 @@ process.argv.slice(2).forEach(arg => {
         O = argData;
     }  else if(inp == "A") { //Airport
         A = argData;
-    } else if(arg.toUpperCase() == "HELP") {
+    }  else if(inp == "DEP") { //Airport
+        departureInput = argData;
+    }  else if(inp == "ARR") { //Airport
+        arrivalInput = argData;
+    } else if(inp == "HELP") {
         console.log("You can use arguments to filter flights.");
         console.log("If you only wanna se the flights from 2025 you type 'y:2025'.");
         console.log("You can combine how ever many commands you want.");
         console.log("\nFull list of commands:");
-        console.log("Year Y:xxxx \nMonth M:xx \nType T:xxx \nRegistration R:xxxxx  \nSpan months S:xx-xx \nFilter airport A:xxx \nOutput to file O:fileName")
+        console.log("Year Y:xxxx \nMonth M:xx \nType T:xxx \nRegistration R:xxxxx  \nSpan months S:xx-xx \nFilter airport A:xxx \nOutput to file O:fileName \nDeparture station DEP:xxx \nArrival station ARR:xxx");
         return process.exit();
     } else {
-        console.log(`${arg} is not a command.`);
+        console.log(`${inp} is not a command.`);
         console.log(`To see all commands type 'help' in the command line.`);
         return process.exit();
     }
@@ -75,6 +82,8 @@ workingContent.forEach(flight => {
     if (filterThis(R, reg)) return;
     if (filterThis(T, type)) return;
     if (filterSpan(S, month)) return;
+    if (filterThis(departureInput, dep)) return;
+    if (filterThis(arrivalInput, arr)) return;
     if (filterThis(A, dep) && filterThis(A, arr)) return;
 
 
