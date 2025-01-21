@@ -9,9 +9,10 @@ const fileContent = fs.readFileSync(`./logbooks/${fileName}`, "utf-8");
 let workingContent = fileContent.split("\n");
 
 let blockHrs = 0;
+let flightCounter = 0;
 let totalOutput = "";
 
-let Y, M, T, R, S, O
+let Y, M, T, R, S, O, A;
 
 process.argv.slice(2).forEach(arg => {
     const argData = arg.slice(2).toUpperCase();
@@ -28,12 +29,14 @@ process.argv.slice(2).forEach(arg => {
         S = timespan(argData);
     } else if(inp == "O:") {
         O = argData;
-    }else if(arg.toUpperCase() == "HELP") {
+    }  else if(inp == "A:") { //Airport
+        A = argData;
+    } else if(arg.toUpperCase() == "HELP") {
         console.log("You can use arguments to filter flights.");
         console.log("If you only wanna se the flights from 2025 you type 'y:2025'.");
         console.log("You can combine how ever many commands you want.");
         console.log("\nFull list of commands:");
-        console.log("Year Y:xxxx \nMonth M:xx \nType T:xxx \nRegistration R:xxxxx  \nSpan months S:xx-xx \nOutput to file O:fileName")
+        console.log("Year Y:xxxx \nMonth M:xx \nType T:xxx \nRegistration R:xxxxx  \nSpan months S:xx-xx \nFilter airport A:xxx \nOutput to file O:fileName")
         return process.exit();
     } else {
         console.log(`${arg} is not a command.`);
@@ -72,7 +75,7 @@ workingContent.forEach(flight => {
     if (filterThis(R, reg)) return;
     if (filterThis(T, type)) return;
     if (filterSpan(S, month)) return;
-
+    if (filterThis(A, dep) && filterThis(A, arr)) return;
 
 
     if(flightTime.length < 3) {
@@ -91,9 +94,11 @@ workingContent.forEach(flight => {
     console.log(testOutput);
     totalOutput += testOutput + "\n";
     blockHrs += blockHrsDecimal;
+    flightCounter++;
 });
 totalOutput += "\nBlock hours for selected period: " + Math.round(blockHrs*10)/10 + " hrs";
 console.log(Math.round(blockHrs*10)/10);
+console.log(`Total flights: ${flightCounter}`)
 if(O) {
     fs.writeFileSync(O+".txt", totalOutput)
 }
