@@ -15,21 +15,22 @@ let totalOutput = "";
 let Y, M, T, R, S, O, A;
 
 process.argv.slice(2).forEach(arg => {
-    const argData = arg.slice(2).toUpperCase();
-    const inp = arg.slice(0,2).toUpperCase();
-    if(inp == "Y:") { //Year
+    const inp = arg.split(":")[0].toUpperCase();
+    const argData = arg.split(":")[1].toUpperCase();
+
+    if(inp == "Y") { //Year
         Y = argData;
-    } else if(inp == "M:") { //Month
+    } else if(inp == "M") { //Month
         M = argData;
-    } else if(inp == "R:") { //Reg
+    } else if(inp == "R") { //Reg
         R = argData;
-    } else if(inp == "T:") { //Type
+    } else if(inp == "T") { //Type
         T = argData;
-    } else if(inp == "S:") { //timeSpan
+    } else if(inp == "S") { //timeSpan
         S = timespan(argData);
-    } else if(inp == "O:") {
+    } else if(inp == "O") {
         O = argData;
-    }  else if(inp == "A:") { //Airport
+    }  else if(inp == "A") { //Airport
         A = argData;
     } else if(arg.toUpperCase() == "HELP") {
         console.log("You can use arguments to filter flights.");
@@ -43,7 +44,6 @@ process.argv.slice(2).forEach(arg => {
         console.log(`To see all commands type 'help' in the command line.`);
         return process.exit();
     }
-    
 });
 
 workingContent = workingContent.reverse();
@@ -58,7 +58,7 @@ workingContent.forEach(flight => {
     const dep = details[2].split("-")[2];
     const arr = details[2].split("-")[3].slice(0,-1);
     const year = details[3].split("-")[0].split('"')[1];
-    const month = details[3].split("-")[1];
+    const month = parseInt(details[3].split("-")[1]);
     const day = details[3].split("-")[2].replaceAll('"', '');
     const depTime = details[4].replaceAll('"', '').slice(0, 5)
     const arrTime = details[6].replaceAll('"', '').slice(0, 5)
