@@ -12,7 +12,7 @@ let blockHrs = 0;
 let flightCounter = 0;
 let totalOutput = "";
 
-let Y, M, T, R, S, O, A, departureInput, arrivalInput;
+let Y, M, T, R, S, O, A, departureInput, arrivalInput, landing, notLanding, PIC;
 
 process.argv.slice(2).forEach(arg => {
     if (!arg.includes(":")) {
@@ -35,6 +35,12 @@ process.argv.slice(2).forEach(arg => {
         O = argData;
     }  else if(inp == "A") { //Airport
         A = argData;
+    } else if(inp == "PIC") { //Reg
+        PIC = argData;
+    }  else if(inp == "LAND") { //Airport
+        landing = true;
+    }  else if(inp == "NOLAND") { //Airport
+        notLanding = true;
     }  else if(inp == "DEP") { //Airport
         departureInput = argData;
     }  else if(inp == "ARR") { //Airport
@@ -44,7 +50,9 @@ process.argv.slice(2).forEach(arg => {
         console.log("If you only wanna se the flights from 2025 you type 'y:2025'.");
         console.log("You can combine how ever many commands you want.");
         console.log("\nFull list of commands:");
-        console.log("Year Y:xxxx \nMonth M:xx \nType T:xxx \nRegistration R:xxxxx  \nSpan months S:xx-xx \nFilter airport A:xxx \nOutput to file O:fileName \nDeparture station DEP:xxx \nArrival station ARR:xxx");
+        console.log("Year Y:xxxx \nMonth M:xx \nType T:xxx \nRegistration R:xxxxx  \nSpan months S:xx-xx \nFilter airport A:xxx \nOutput to file O:fileName \nDeparture station DEP:xxx \nArrival station ARR:xxx \nPilot in command PIC:employee number");
+        console.log("\nStatic flags")
+        console.log("To see only flights you have landed type: LAND \nTo see only flights you have NOT landed type: NOLAND")
         return process.exit();
     } else {
         console.log(`${inp} is not a command.`);
@@ -71,6 +79,7 @@ workingContent.forEach(flight => {
     const arrTime = details[6].replaceAll('"', '').slice(0, 5);
     const reg = details[7].replaceAll('"', '');
     const type = details[8].replaceAll('"', '');
+    const land = details[10].replaceAll('"', '');
     const capt = details[11].replaceAll('"', '');
     const flightNr = details[2].split("-")[0].replaceAll('"', '');
     let flightTime = details[9];
@@ -85,6 +94,18 @@ workingContent.forEach(flight => {
     if (filterThis(departureInput, dep)) return;
     if (filterThis(arrivalInput, arr)) return;
     if (filterThis(A, dep) && filterThis(A, arr)) return;
+    if (filterThis(PIC, capt)) return;
+
+    if(landing) {
+        if(land == "false") {
+            return;
+        }
+    }
+    if(notLanding) {
+        if(land == "true") {
+            return;
+        }
+    }
 
 
     if(flightTime.length < 3) {
