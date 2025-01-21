@@ -60,8 +60,8 @@ workingContent.forEach(flight => {
     const year = details[3].split("-")[0].split('"')[1];
     const month = parseInt(details[3].split("-")[1]);
     const day = details[3].split("-")[2].replaceAll('"', '');
-    const depTime = details[4].replaceAll('"', '').slice(0, 5)
-    const arrTime = details[6].replaceAll('"', '').slice(0, 5)
+    const depTime = details[4].replaceAll('"', '').slice(0, 5);
+    const arrTime = details[6].replaceAll('"', '').slice(0, 5);
     const reg = details[7].replaceAll('"', '');
     const type = details[8].replaceAll('"', '');
     const capt = details[11].replaceAll('"', '');
@@ -79,7 +79,7 @@ workingContent.forEach(flight => {
 
 
     if(flightTime.length < 3) {
-        flightTime=0+flightTime
+        flightTime=0+flightTime;
     }
 
     // DIff months
@@ -100,7 +100,7 @@ totalOutput += "\nBlock hours for selected period: " + Math.round(blockHrs*10)/1
 console.log(Math.round(blockHrs*10)/10);
 console.log(`Total flights: ${flightCounter}`)
 if(O) {
-    fs.writeFileSync(O+".txt", totalOutput)
+    fs.writeFileSync(O+".txt", totalOutput);
 }
 
 function min2hrs(minutes) {
@@ -117,7 +117,7 @@ function filterThis(consoleInput, logbookEntry) {
 
 
 function timespan(spanInput) {
-    let span = {}
+    let span = {};
     const splitInput = spanInput.split("-");
     span.lower = parseInt(splitInput[0]);
     span.upper = parseInt(splitInput[1]);
