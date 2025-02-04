@@ -12,7 +12,7 @@ let blockHrs = 0;
 let flightCounter = 0;
 let totalOutput = "";
 
-let Y, M, T, R, S, O, A, departureInput, arrivalInput, landing, notLanding, PIC;
+let Y, M, T, R, S, O, A, departureInput, arrivalInput, landing, notLanding, PIC, rteArpt1, rteArpt2;
 
 process.argv.slice(2).forEach(arg => {
     if (!arg.includes(":")) {
@@ -45,12 +45,15 @@ process.argv.slice(2).forEach(arg => {
         departureInput = argData;
     }  else if(inp == "ARR") { //Airport
         arrivalInput = argData;
+    }  else if(inp == "RTE") { //Airport
+        rteArpt1 = argData.split("-")[0];
+        rteArpt2 = argData.split("-")[1];
     } else if(inp == "HELP") {
         console.log("You can use arguments to filter flights.");
         console.log("If you only wanna se the flights from 2025 you type 'y:2025'.");
         console.log("You can combine how ever many commands you want.");
         console.log("\nFull list of commands:");
-        console.log("Year Y:xxxx \nMonth M:xx \nType T:xxx \nRegistration R:xxxxx  \nSpan months S:xx-xx \nFilter airport A:xxx \nOutput to file O:fileName \nDeparture station DEP:xxx \nArrival station ARR:xxx \nPilot in command PIC:employee number");
+        console.log("Year Y:xxxx \nMonth M:xx \nType T:xxx \nRegistration R:xxxxx  \nSpan months S:xx-xx \nFilter airport A:xxx \nOutput to file O:fileName \nDeparture station DEP:xxx \nArrival station ARR:xxx \nPilot in command PIC:employee number \nAll flights between two airports RTE:xxx-xxx");
         console.log("\nStatic flags")
         console.log("To see only flights you have landed type: LAND \nTo see only flights you have NOT landed type: NOLAND")
         return process.exit();
@@ -95,7 +98,9 @@ workingContent.forEach(flight => {
     if (filterThis(arrivalInput, arr)) return;
     if (filterThis(A, dep) && filterThis(A, arr)) return;
     if (filterThis(PIC, capt)) return;
-
+    if (rteArpt1 && rteArpt1 != dep && rteArpt1 != arr) return;
+    if (rteArpt2 && rteArpt2 != dep && rteArpt2 != arr) return;
+    
     if(landing) {
         if(land == "false") {
             return;
