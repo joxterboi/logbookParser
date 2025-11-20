@@ -1,0 +1,15 @@
+* { margin: 0;}
+
+ul {
+    list-style: none;
+}
+
+.month {
+    background-color: green;
+    font-size: 30px;
+}
+
+
+.day {
+    color: red;
+}
