@@ -2,7 +2,7 @@ const { log } = require("node:console");
 const fs = require("node:fs");
 const { exit } = require("node:process");
 
-const fileName = "joakim.csv";
+const fileName = "joakim-15-NOV-2025.csv";
 
 const fileContent = fs.readFileSync(`./logbooks/${fileName}`, "utf-8");
 
