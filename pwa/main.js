@@ -1,8 +1,10 @@
-import { min2hrs, sort } from "./js/util.js";
+import { min2hrs, sort, loadButtons, printAll, flightClickable } from "./js/util.js";
 
 document.getElementById("loadLogbook")?.addEventListener("click", () => {
     loadLogBook()
 })
+
+
 
 
 async function loadLogBook() {
@@ -10,7 +12,10 @@ async function loadLogBook() {
     const totals = calculate(fileContent);
     const sorted = sortEntries(totals);
     printAll(sorted)
+    localStorage.setItem("flights", JSON.stringify(totals))
 
+    loadButtons()
+    flightClickable()
 }
 
 async function fetchLogBook() {
@@ -50,6 +55,8 @@ function calculate(fileContent) {
         total.flightTime = details[9];
         total.blockHrsDecimal = min2hrs(total.flightTime);
 
+        total.fid = (total.depTime + total.day + total.month + total.year).replaceAll(":", "")
+
         totals.push(total)
 
     })
@@ -76,45 +83,3 @@ function sortEntries(entries) {
     return sortedYears
 }
 
-function printAll(flights) {
-    const output = document.getElementById("logContainer");
-
-    Object.entries(flights).forEach(([year, months]) => {
-
-        // Create a container for each year
-        const yearDiv = document.createElement("div");
-        yearDiv.innerHTML = `<h2>${year}</h2>`;
-
-        // Create a list for that year's months
-
-        Object.entries(months).forEach(month => {
-            // Create a list item for each day
-            const monthsDiv = document.createElement("div");
-            monthsDiv.innerHTML = `<h3 class="month">${month[0]}</h3>`;
-
-            Object.entries(month[1]).forEach(day => {
-                // Create a list item for each day
-                const dayDiv = document.createElement("div");
-                dayDiv.innerHTML = `<h4 class="day">${day[0]}</h4>`;
-
-                const flightList = document.createElement("ul");
-                day[1].forEach(flight => {
-                    const flightEntry = document.createElement("li");
-                    const title = `${flight.dep}-${flight.arr}`
-                    flightEntry.textContent = title;
-                    flightList.appendChild(flightEntry);
-                })
-                dayDiv.appendChild(flightList)
-
-
-
-                monthsDiv.appendChild(dayDiv)
-            });
-
-
-            yearDiv.appendChild(monthsDiv)
-        });
-
-        output ? output.appendChild(yearDiv) : console.log("NO OUTPUT FOUND")
-    });
-}

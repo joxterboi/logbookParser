@@ -1,15 +1,116 @@
-* { margin: 0;}
+@import "style/colors.css";
+@import "style/displayWindow.css";
+
+* { margin: 0;font-family: roboto;}
 
 ul {
     list-style: none;
 }
 
-.month {
-    background-color: green;
-    font-size: 30px;
+
+
+
+#totalHeading {
+    width: 800px;
+    margin-left: 50%;
+    transform: translateX(-50%);
+}
+#totalsContainer {
+    margin-top: 40px;
+    display: flex;
+    width: 800px;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    justify-content: center;
+}
+
+.card {
+    padding: 35px;
+    background-color: var(--color-main);
+    border-radius: 20px;
+    margin: 0 10px;
+
+    & :first-child {
+        color: #ccc;
+        font-weight: bold;
+        font-size: 18px;
+    }
+    & :last-child {
+        color: #fff;
+        font-size: 25px;
+    }
+    
 }
 
 
+.year {
+    color: #fff;
+    font-size: 35px;
+    padding: 6px;
+    font-weight: 900;
+}
+.yearDiv {
+    overflow: hidden;
+
+}
+.yearHeader {
+    width: 100%;
+    background-color: var(--color-secondary);
+    height: 60px;
+
+    h2 {
+        float: left;
+    }
+
+    button {
+        height: 40px;
+        margin-top: 10px;
+        padding: 14px;
+        float: right;
+        margin-right: 100px;
+        background-color: var(--color-secondary);
+        border: 4px solid #fff;
+        color: #fff;
+        font-weight: bold;
+        border-radius: 15px;
+        line-height: 2px;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
+.month {
+    background-color: var(--color-main);
+    padding: 15px;
+    color: #fff;
+    font-size: 30px;
+    margin-bottom: 5px;
+}
 .day {
-    color: red;
+    color: #777;
+    margin-left: 20px;
+    font-size: 18px;
+}
+.monthCard {
+    margin-bottom: 20px;
+}
+.dayCard ul {
+    display: flex;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    
+    li {
+        background-color: #ccc; 
+        padding: 8px;
+        margin: 0 2px;
+        border-radius: 10px;
+    }
+}
+.flightCard {
+    color: #000;
+
+    &:hover {
+        cursor: pointer;
+    }
 }
