@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loggbook parser</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div id="totalHeading">
+            <h1>Totals</h1>
+        </div>
+        <div id="totalsContainer">
+            <div class="card">
+                <p>HRS</p>
+                <p>1429.9</p>
+            </div>
+            <div class="card">
+                <p>PIC</p>
+                <p>503.2</p>
+            </div>
+            <div class="card">
+                <p>NIGHT</p>
+                <p>763.4</p>
+            </div>
+            <div class="card">
+                <p>Flights</p>
+                <p>424</p>
+            </div>
+        </div>
+    </header>
+    <button id="loadLogbook">Load logbook</button>
+    <div id="logContainer">
+
+    </div>
+
+    <div id="displayFlightWindow">
+        <p id="closeFlightWindow">x</p>
+        <section id="flightTopRow" class="displayFlightSection">
+            <p>
+                <span id="depStation">ARN</span> <span id="flightNum">SK103</span> <span id="arrStation">OSL</span>
+            </p>
+        </section>
+        <section id="flightMiddleRow" class="displayFlightSection">
+            <div>
+                <p id="blockOffTime">11:29</p>
+                <p>B-OFF</p>
+            </div>
+            <div>
+                <p id="totalBlockTime">1.2</p>
+                <p>BLOCK <br> TIME</p>
+            </div>
+            <div>
+                <p id="blockOnTime">12:39</p>
+                <p>B-ON</p>
+            </div>
+        </section>
+        <section id="flightBottomRow" class="displayFlightSection">
+            <div>
+                <p id="type">A32N</p>
+                <p id="date">03/03-25</p>
+                <p id="reg">SE-RZZ</p>
+            </div>
+            <p>Capt. <span id="pic">Joakim Kjellander</span></p>
+            <p>Landed <span id="landed">Yes</span></p>
+        </section>
+    </div>
+</body>
+<script type="module" src="main.js"></script>
+
+</html>
