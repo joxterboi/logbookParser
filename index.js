@@ -1,6 +1,4 @@
-const { log } = require("node:console");
 const fs = require("node:fs");
-const { exit } = require("node:process");
 
 const fileName = "joakim.csv";
 
