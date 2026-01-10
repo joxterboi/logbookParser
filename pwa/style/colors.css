@@ -1,7 +1,7 @@
 :root {
-  --color-main: #2154ee;
-  --color-secondary: red;
+  --color-main: #87a0ee;
+  --color-secondary: #ecc656;
 
-  --color-pri-text: #999;
-  --color-sec-text: #2154ee;
+  --color-pri-text: #222222;
+  --color-sec-text: #fdffbe;
 }

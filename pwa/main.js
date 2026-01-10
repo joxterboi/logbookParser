@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { min2hrs, sort, loadButtons, printAll, flightClickable } from "./js/util.js";
 
 document.getElementById("loadLogbook")?.addEventListener("click", () => {
@@ -76,7 +78,6 @@ function sortEntries(entries) {
             months[month[0]] = days
 
         })
-
         sortedYears[year[0]] = months
     })
 

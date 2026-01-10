@@ -7,6 +7,9 @@ ul {
     list-style: none;
 }
 
+body {
+    background-color: #333;
+}
 
 
 
@@ -44,7 +47,7 @@ ul {
 
 
 .year {
-    color: #fff;
+    color: var(--color-sec-text);
     font-size: 35px;
     padding: 6px;
     font-weight: 900;
@@ -83,12 +86,12 @@ ul {
 .month {
     background-color: var(--color-main);
     padding: 15px;
-    color: #fff;
+    color: var(--color-pri-text);
     font-size: 30px;
     margin-bottom: 5px;
 }
 .day {
-    color: #777;
+    color: #6b89ee;
     margin-left: 20px;
     font-size: 18px;
 }
